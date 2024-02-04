@@ -1,0 +1,19 @@
+#heading{
+    color:green;
+}
+
+.header{
+    display:flex;
+    justify-content: space-between;
+    border-bottom:0.2rem solid black; 
+}
+
+.login {
+    padding:15px 25px;
+    cursor: pointer;
+    /* border: 2px solid blue; */
+    background-color: lightblue;
+    font-weight: bold;
+    font-size: medium;
+
+}
