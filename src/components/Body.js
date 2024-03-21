@@ -3,8 +3,8 @@ import RestaurantCard from "./RestaurantCard";
 import "./Body.css"
 import { useEffect, useState } from "react";
 import Shimmer from "./Shimmer";
-
-
+import { Link } from "react-router-dom";
+import useOnlineStatus from "../utils/useOnlineStatus";
 
 const Body=() => {
     //State variable:- super powerfull variable
@@ -25,20 +25,32 @@ const Body=() => {
     // console.log("body rendered");
     const fetchData= async ()=>{
         const data=await fetch(
-        "https://www.swiggy.com/dapi/restaurants/list/v5?lat=17.519639&lng=78.382403&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING");
+            "https://www.swiggy.com/dapi/restaurants/list/v5?lat=12.9715987&lng=77.5945627&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING"
+        // "https://www.swiggy.com/dapi/restaurants/list/v5?lat=17.519639&lng=78.382403&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING"
+        );
         // https://www.swiggy.com/dapi/restaurants/list/v5?lat=17.519639&lng=78.382403&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING
         const json_data=await data.json();
-        console.log(json_data.data.cards[1].card.card.gridElements.infoWithStyle.restaurants);
+        // console.log(json_data.data.cards[1].card.card.gridElements.infoWithStyle.restaurants);
 
         setListOfRestaurant(json_data?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
         setFilteredRestaurant(json_data?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
     };
+
+    const onelineStatus=useOnlineStatus();
+    console.log(onelineStatus)
+
+     if (onelineStatus === false) {
+        return (<h1>Looks like You are offline!!!!. Please check your internet connection</h1>);
+    }
 
     if(ListOfRestaurant.length === 0){
         return <Shimmer/>
         // <h1>Loading the page please wait.....</h1>;
     }
     
+
+
+   
 
     return ListOfRestaurant.length === 0 ? <Shimmer/> : (
         <div className="body">
@@ -74,8 +86,13 @@ const Body=() => {
     
 
             {
-                FilteredRestaurant.map((restaurant) => <RestaurantCard key={restaurant.info.id} 
-                resData={restaurant}/>)
+                FilteredRestaurant.map((restaurant) => 
+                <Link to={"/restaurants/"+restaurant.info.id} key={restaurant.info.id}>
+                <RestaurantCard  
+                resData={restaurant}/>
+                </Link>
+                
+                )
             }
 
             {/* <RestaurantCard resName="DOMINOS" cusinie="pizza"/> */}

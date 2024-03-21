@@ -4,12 +4,12 @@
 
 .header{
     display:flex;
-    justify-content: space-between;
+    /* justify-content: space-evenly; */
     border-bottom:0.2rem solid black; 
 }
 
 .login {
-    padding:15px 25px;
+    padding:12px 20px;
     cursor: pointer;
     /* border: 2px solid blue; */
     background-color: lightblue;

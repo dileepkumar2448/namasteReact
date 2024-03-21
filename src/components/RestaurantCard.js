@@ -1,7 +1,9 @@
+import { useParams } from "react-router-dom";
 import {CDN_URL} from "../utils/constants"
 
 
 const RestaurantCard=(props) =>{
+    
     const {resData} = props;
     const {cloudinaryImageId,name,cuisines,avgRating}=resData?.info;
     
@@ -15,7 +17,7 @@ const RestaurantCard=(props) =>{
         <h4>{cuisines.slice(0,3).join(",")}</h4>
         {/* <h4>{costForTwo / 100} for TWO</h4> */}
         <h4>{avgRating}</h4>
-        <span>{resData.info.sla.deliveryTime} minutes</span>
+        <span>{resData.info.sla.slaString}</span>
     </div>
  )   
 }
